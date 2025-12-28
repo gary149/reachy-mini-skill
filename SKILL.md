@@ -2,12 +2,13 @@
 name: reachy-mini
 description: |
   Complete SDK for controlling Reachy Mini robot - head movement, antennas, camera, audio, motion recording/playback.
+  Covers architecture (daemon/client), deployment modes (USB, wireless, simulation, on-Pi), and app distribution.
   Also includes advanced application patterns: MovementManager, layered motion, audio-reactive movement, face tracking,
   LLM tool systems, and OpenAI realtime integration.
   Use when: (1) Writing code to control Reachy Mini, (2) Moving the robot head or antennas, (3) Accessing camera/video,
   (4) Playing/recording audio, (5) Recording or playing back motions, (6) Looking at points in image or world space,
   (7) Understanding robot capabilities, (8) Connecting to real or simulated robot, (9) Building conversational AI apps,
-  (10) Integrating with LLMs/OpenAI, (11) Any robotics task with Reachy Mini.
+  (10) Integrating with LLMs/OpenAI, (11) Deploying apps to robot, (12) Any robotics task with Reachy Mini.
 ---
 
 # Reachy Mini SDK
@@ -298,6 +299,7 @@ while True:
 
 ## Reference Documentation
 
+- **[Architecture & Deployment](references/architecture.md)** - Daemon/client split, deployment modes (USB, wireless, simulation), running code, app distribution
 - **[API Reference](references/api_reference.md)** - Complete method signatures, all parameters and return types
 - **[Motion Reference](references/motion_reference.md)** - Interpolation details, Move classes, GotoMove, RecordedMove
 - **[Media Reference](references/media_reference.md)** - All camera resolutions, audio specs, backend options
