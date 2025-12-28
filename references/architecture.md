@@ -5,6 +5,10 @@ How the Reachy Mini software stack works and how to run code on the robot.
 ## Table of Contents
 - [Client-Server Architecture](#client-server-architecture)
 - [Deployment Modes](#deployment-modes)
+  - [Simulation](#1-simulation-no-robot) - MuJoCo physics simulation
+  - [USB/Lite](#2-usb--lite-robot-on-your-computer) - Direct USB connection
+  - [Wireless Remote](#3-wireless---remote-laptop) - Code on laptop, daemon on Pi
+  - [Wireless On-Device](#4-wireless---100-on-pi) - Everything on Pi
 - [Running Your Code](#running-your-code)
 - [App Distribution System](#app-distribution-system)
 
@@ -54,15 +58,73 @@ Reachy Mini uses a **daemon (server) + SDK (client)** split:
 
 Test code without hardware using MuJoCo physics simulation.
 
+#### Prerequisites
+
 ```bash
-# Terminal 1: Start daemon in simulation mode
+# Install MuJoCo support
+pip install reachy_mini[mujoco]
+```
+
+#### Visual Simulator (with 3D window)
+
+**Linux/Windows:**
+```bash
 reachy-mini-daemon --sim
 ```
 
-```python
-# Your code
-robot = ReachyMini(use_sim=True)
+**macOS** (requires `mjpython` wrapper for OpenGL):
+```bash
+# Find your Python library path
+PYTHON_LIB=$(python -c "import sys; print(sys.base_prefix + '/lib')")
+
+# Set library path and run with mjpython
+export DYLD_LIBRARY_PATH="$PYTHON_LIB:$DYLD_LIBRARY_PATH"
+mjpython -c "
+from reachy_mini.daemon.app.main import main
+import sys
+sys.argv = ['reachy-mini-daemon', '--sim']
+main()
+"
 ```
+
+#### Headless Simulator (no window, for CI/servers)
+
+```bash
+reachy-mini-daemon --sim --headless
+```
+
+#### Daemon Options
+
+| Option | Description |
+|--------|-------------|
+| `--sim` | Enable MuJoCo simulation |
+| `--headless` | No visual window (faster, works without display) |
+| `--fastapi-port 8001` | Use different port if 8000 is taken |
+| `--scene <name>` | Load specific MuJoCo scene |
+
+#### Client Connection
+
+```python
+# Connect to running simulation daemon
+robot = ReachyMini()
+
+# Or auto-spawn simulation daemon (Linux/Windows only)
+robot = ReachyMini(spawn_daemon=True, use_sim=True)
+```
+
+#### No-Camera Mode
+
+When running headless simulation, you may need to skip camera initialization:
+
+```python
+# Use no-video backend to avoid camera errors
+robot = ReachyMini(media_backend="default_no_video")
+```
+
+Available media backends:
+- `"default"` - Full camera + audio
+- `"default_no_video"` - Audio only, no camera
+- `"no_media"` - No camera or audio
 
 ### 2. USB / Lite (Robot on Your Computer)
 
