@@ -17,7 +17,7 @@ A Claude Code skill that provides complete SDK knowledge for controlling Reachy 
 ### Add the marketplace
 
 ```bash
-/plugin marketplace add YOUR_GITHUB_USERNAME/reachy-mini-skill
+/plugin marketplace add gary149/reachy-mini-skill
 ```
 
 ### Install the skill
