@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "reachy-mini-marketplace",
+  "owner": {
+    "name": "Pollen Robotics"
+  },
+  "metadata": {
+    "description": "Claude Code skills for controlling Reachy Mini robot",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "reachy-mini",
+      "source": "./",
+      "description": "Complete SDK for controlling Reachy Mini robot - head movement, antennas, camera, audio, motion recording/playback. Covers architecture, deployment modes, and advanced application patterns including LLM integration.",
+      "version": "1.0.0",
+      "category": "development",
+      "tags": ["robotics", "reachy-mini", "sdk", "motion", "control", "camera", "audio"],
+      "license": "Apache-2.0",
+      "strict": false
+    }
+  ]
+}
